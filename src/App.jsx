@@ -1,6 +1,12 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import cogoToast from 'cogo-toast';
+import UpdateTask from './components/UpdateTask'
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from "react-router-dom";
 
 function App() {
   const[text,setText] = useState("")
@@ -44,7 +50,8 @@ function App() {
 
     const listTasks = tasks.map((task) => {
     return (
-      <li key={task.id}>id: {task.id} content: {task.task_content} date: {task.date}<button onClick={() => deleteTask(task)} id="del">delete</button><button id="edit">edit</button></li>
+      <li key={task.id}>id: {task.id} content: {task.task_content} date: {task.date}<button onClick={() => deleteTask(task)} id="del">delete</button> <Link to={`/edit/${task.id}`} >
+        Edit</Link> </li>
     )})
 
   const addTask = () => {
@@ -83,9 +90,14 @@ function App() {
       <div className="box">
       <h2>List of task</h2>
       </div>
+      <Router>
+        <Route path="/edit/:id">
+        <UpdateTask></UpdateTask>
+        </Route>
       <ul className="list">
          {listTasks} 
       </ul>
+      </Router>
       </div>
     </div>
    
