@@ -2,6 +2,7 @@ import { useParams } from "react-router";
 import { useEffect, useState } from 'react';
 import cogoToast from 'cogo-toast';
 import DatePicker from "react-datepicker";
+import TimePicker from 'react-time-picker';
 import "react-datepicker/dist/react-datepicker.css";
 
 const UpdateTask = () => {
@@ -9,6 +10,7 @@ const UpdateTask = () => {
     const [task,setTask] = useState("")
     const [content,setContent] = useState("")
     const [date,setDate] = useState("")
+    const [time,setTime] = useState()
     const [status,setStatus] = useState("")
     useEffect(() => {
         fetch(`http://localhost:8000/getcurrentTask/${id}`, {
@@ -28,7 +30,7 @@ const UpdateTask = () => {
             setContent(e.target.value)
             console.log(content)
         }
-        else{
+        else if(e.target.name === "status"){
             setStatus(e.target.value)
             console.log(status)
     }
@@ -36,12 +38,13 @@ const UpdateTask = () => {
 }
 const onClick = () => {
     const id = task.id
+    console.log(status)
     fetch(`http://localhost:8000/updateTask`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({id, content, date, status})
+        body: JSON.stringify({id, content, date: date.toLocaleDateString().slice(0,10), status, time})
       })
       .then(response => response.json())
       .then(data => {
@@ -58,17 +61,26 @@ return(
    <div className="edit">
        <h2>Edit task</h2>
          <p>id: {task.id}</p>  
-         content: <input onChange={handleChange} type="text" name="content" value={content} placeholder={task.content}/>
-         status: <select onChange={handleChange} name="status">
-         <option value="inprogress">inprogress</option>
-         <option value="done">done</option></select> 
-         <DatePicker
+         <input id="field" onChange={handleChange} type="text" name="content" value={content} placeholder={task.content}/>
+         <br></br>
+         date: <DatePicker
         required
-        onChange={date =>{
-            setDate(date)
-        }} 
+        onChange={setDate} 
         selected={date}
       />
+      <br></br>
+      <br></br>
+      time: <TimePicker
+        onChange={setTime}
+        value={time}
+      />
+      <br></br>
+      <br></br>
+       status: <select onChange={handleChange} name="status">
+         <option></option>  
+         <option value="inprogress">inprogress</option>
+         <option value="done">done</option></select> 
+         <br></br>
          <button onClick={onClick}>Update task</button>   
    </div>
 )

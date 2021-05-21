@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import cogoToast from 'cogo-toast';
 import UpdateTask from './components/UpdateTask'
+import "react-datepicker/dist/react-datepicker.css";
 import {
   BrowserRouter as Router,
   Route,
@@ -50,19 +51,18 @@ function App() {
 
     const listTasks = tasks.map((task) => {
     return (
-      <li key={task.id}>id: {task.id} content: {task.task_content} date: {task.date}<button onClick={() => deleteTask(task)} id="del">delete</button> <Link to={`/edit/${task.id}`} >
-        Edit</Link> </li>
+      <li key={task.id}>{task.task_content},  {task.date},  {task.time}, status: {task.status}<button onClick={() => deleteTask(task)} id="del">delete</button> <button id="edit"><Link to={`/edit/${task.id}`}>
+        edit</Link></button></li>
     )})
 
-  const addTask = () => {
-    const dateformat = new Date()
-    const date = dateformat.toJSON().slice(0, 10).replace(/-/g, '-')
+  const addTask = () => { 
+    const date = new Date()
     fetch('http://localhost:8000/addTask', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ date, text
+        body: JSON.stringify({ date: date.toJSON().slice(0, 10).replace(/-/g, '-'), text,
         }),
       })
           .then(response => response.json())

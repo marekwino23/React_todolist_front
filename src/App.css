@@ -5,11 +5,20 @@
 html{
   background-color: #cee5e9;
 }
+#field{
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;  
+}
 
 select{
     background-color: #3a7c7c;
     color: white;
-    width: 16%;
+    width: 26%;
     height: 39px;
 }
 
@@ -30,10 +39,15 @@ select{
   .list {
     width: 87%;
     margin-left: -21px;
+    
   }
   .box {
     width: 100%;
   }
+}
+a{
+  list-style-type: none;
+  color:white;
 }
 button{
   width: 100%;
@@ -65,6 +79,7 @@ button{
   background-color:#498686;
   color: white;
   padding: 14px 20px;
+  list-style-type: none;
   margin: 8px 0;
   margin-left: 30px;
   font-size: 18px;
@@ -75,7 +90,7 @@ button{
 .list{
   color:rgb(64, 131, 131);
   list-style-type: none;
-  font-size: 15px;
+  font-size: 13px;
   text-align: center;
   margin-right: 44px;
 }
