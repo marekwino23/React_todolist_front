@@ -12,6 +12,7 @@ const UpdateTask = () => {
     const [date,setDate] = useState("")
     const [time,setTime] = useState()
     const [status,setStatus] = useState("")
+
     useEffect(() => {
         fetch(`http://localhost:8000/getcurrentTask/${id}`, {
           method: 'GET',
@@ -33,55 +34,58 @@ const UpdateTask = () => {
         else if(e.target.name === "status"){
             setStatus(e.target.value)
             console.log(status)
-    }
+        }
 
 }
-const onClick = () => {
-    const id = task.id
-    console.log(status)
-    fetch(`http://localhost:8000/updateTask`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({id, content, date: date.toLocaleDateString().slice(0,10), status, time})
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.info === "update success") {
-          cogoToast.success("Update success")
-          window.location.href='/'
-        } else {
-          console.log("failed")
-        }
-  })
-}
+      const onClick = () => {
+        const id = task.id
+            if(date === "" && content === "" && status === "" && time === undefined){
+              window.location.href='/'
+            }
+            else{
+              fetch(`http://localhost:8000/updateTask`, {
+                    method: 'PATCH',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({id, content, date: date.toLocaleDateString().slice(0,10), status, time})
+                  })
+                  .then(response => response.json())
+                  .then(data => {
+                    if (data.info === "update success") {
+                      cogoToast.success("Update success")
+                      window.location.href='/'
+                    } else {
+                      console.log("failed")
+                    }
+              })}             
+            }              
 
 return(
    <div className="edit">
        <h2>Edit task</h2>
-         <p>id: {task.id}</p>  
-         <input id="field" onChange={handleChange} type="text" name="content" value={content} placeholder={task.content}/>
-         <br></br>
-         date: <DatePicker
+        <p>id: {task.id}</p>  
+        <input id="field" onChange={handleChange} type="text" name="content" value={content} placeholder={task.content}/>
+        <br></br>
+        date: <DatePicker
         required
         onChange={setDate} 
-        selected={date}
-      />
-      <br></br>
-      <br></br>
-      time: <TimePicker
+        selected={date}/>
+        <br></br>
+        <br></br>
+        time: <TimePicker
         onChange={setTime}
-        value={time}
-      />
-      <br></br>
-      <br></br>
+        value={time}/>
+       <br></br>
+       <br></br>
        status: <select onChange={handleChange} name="status">
-         <option></option>  
-         <option value="inprogress">inprogress</option>
-         <option value="done">done</option></select> 
-         <br></br>
-         <button onClick={onClick}>Update task</button>   
+                  <option></option>  
+                  <option value="delayed">delayed</option>
+                  <option value="done">done</option>
+                  <option value="inprogress">inprogress</option>
+              </select> 
+        <br></br>
+        <button onClick={onClick}>Update task</button>   
    </div>
 )
 }
