@@ -10,7 +10,6 @@ import {
 const ListTask = () => {
     const[tasks, setTasks] = useState([]);
     const notifyRef = useRef(null);
-    
     useEffect(() => {
         fetch('http://localhost:8000/getTasks', {
           method: 'GET',
@@ -25,7 +24,12 @@ const ListTask = () => {
 
       const onStop = () => {
           const audio = document.querySelector("audio")
-          audio.style.visibility = "hidden"
+          if(audio.muted === false){
+            audio.muted = true;
+            }
+            else{
+              document.getElementById("stop").style.visibility = "hidden"
+            }
       }
 
       const onAlert = useCallback(() => {
@@ -37,9 +41,8 @@ const ListTask = () => {
             const hour = today.getHours()
             const minutes = today.getMinutes()
             const music = document.querySelector("audio")
-            music.muted = false
                  if((+time_hour - 1) === hour && +time_minutes === minutes){
-                    cogoToast.warn("Alert!!")
+                    cogoToast.warn("Alert!!", 1000)
                     music.play()
                     document.getElementById("stop").style.visibility = "visible"
                 }
@@ -75,15 +78,16 @@ const ListTask = () => {
                      }
       })
     }
+    
 
     const listTasks = tasks.map((task) => {
         return (
-          <li key={task.id}>{task.task_content},  {task.date},  {task.time}, status: {task.status}<button onClick={() => deleteTask(task)} id="del">delete</button> <button id="edit"><Link to={`/edit/${task.id}`}>
+          <li key={task.id}>{task.task_content},  {task.date},  {task.time}, status: {task.status} <br></br><button onClick={() => deleteTask(task)} id="del">delete</button> <button id="edit"><Link to={`/edit/${task.id}`}>
             edit</Link></button></li>
         )})
         return(
             <div>
-                <button id="stop" style={{visibility:"hidden"}} onClick={onStop}>Stop</button>
+                <button id="stop" style={{visibility:"hidden"}}  aria-label="stop alarm" onClick={onStop}>Stop</button>
                     <div className="box">
                          <h2>List of task</h2>
                      </div>

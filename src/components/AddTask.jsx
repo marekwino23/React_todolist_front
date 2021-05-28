@@ -7,7 +7,7 @@ const AddTask = () => {
     const handleChange = (e) => {
         setText(e.target.value)
       }  
-    const onClick = () => {
+    const onClick = async () => {
         const clock = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
         fetch('http://localhost:8000/addTask', {
             method: 'POST',
@@ -29,7 +29,7 @@ const AddTask = () => {
     }
           return(
             <div className="field">
-                <input required value={text} onChange={handleChange} type="text"></input>
+                <input aria-label="add task" required value={text} onChange={handleChange} type="text" />
                 <button onClick={onClick}>Add task</button>
             </div> 
             )}
