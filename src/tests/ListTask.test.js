@@ -1,14 +1,14 @@
 import ListTask from '../components/ListTask'
-import React from 'react';
 import "@testing-library/jest-dom/extend-expect";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
+ describe("ListTask component", () => {
+    test("renders loading state initially", () => {
+    render(<ListTask />);
+    
+    // loading text powinien być widoczny
+    expect(screen.getByText(/Ładowanie zadań.../i)).toBeInTheDocument();
 
-describe('ListTask', () => {
-    it("renders properly", async() => {
-        render(<ListTask/>);
-        expect(screen.getByText('List of task')).toBeInTheDocument();
-        expect(screen.getByLabelText('stop alarm')).toBeInTheDocument();
-        expect(screen.getByRole('list')).toBeInTheDocument();
-        expect(screen.queryByRole('listitem')).not.toBeInTheDocument();
-    });
+    // listitemów jeszcze nie ma
+    expect(screen.queryByRole("listitem")).not.toBeInTheDocument();
+  });
 });

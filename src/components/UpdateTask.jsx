@@ -1,6 +1,5 @@
 import { useParams } from "react-router";
 import { useEffect, useState } from 'react';
-import cogoToast from 'cogo-toast';
 import DatePicker from "react-datepicker";
 import TimePicker from 'react-time-picker';
 import "react-datepicker/dist/react-datepicker.css";
@@ -14,7 +13,7 @@ const UpdateTask = () => {
     const [status,setStatus] = useState("")
 
     useEffect(() => {
-        fetch(`http://localhost:8000/getcurrentTask/${id}`, {
+        fetch(`http://127.0.0.1:10000/getcurrentTask/${id}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -53,7 +52,7 @@ const UpdateTask = () => {
                   .then(response => response.json())
                   .then(data => {
                     if (data.info === "update success") {
-                      cogoToast.success("Update success")
+                      // cogoToast.success("Update success")
                       window.location.href='/'
                     } else {
                       console.log("failed")
