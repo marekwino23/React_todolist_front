@@ -32,7 +32,7 @@ const ListTask = () => {
 
 
   const changeStatusTask = (task) => {
-    fetch("http://127.0.0.1:10000/change_status", {
+    fetch("https://todolist-python-e5oj.onrender.com/change_status", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: task.id, status: task.done === 0 ? 1: 0 }),
@@ -55,7 +55,7 @@ const ListTask = () => {
 
   // Usuwanie zadania
   const deleteTask = (taskId) => {
-    fetch("http://127.0.0.1:10000/delete_tasks", {
+    fetch("https://todolist-python-e5oj.onrender.com/delete_tasks", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: taskId }),
