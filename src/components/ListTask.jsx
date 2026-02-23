@@ -30,7 +30,7 @@ const ListTask = ({ tasks, setTasks }) => {
   const changeStatusTask = (task) => {
     const newStatus = task.done === 0 || task.done === false ? 1 : 0;
 
-    fetch("http://127.0.0.1:8000/change_status", {
+    fetch("https://todolist-python-e5oj.onrender.com/change_status", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: task.id, done: newStatus }),
