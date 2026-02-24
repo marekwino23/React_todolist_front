@@ -87,7 +87,7 @@ const ListTask = ({ tasks, setTasks }) => {
               <span className="flex-1">
                 {index + 1}. {task.name}
               </span>
-              <div className="flex items-center gap-2">
+              <div style={{display:"flex", gap:"30px"}} className="flex items-center gap-2">
                 <input
                   type="checkbox"
                   checked={task.done === 1 || task.done === true}
